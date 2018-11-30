@@ -27,6 +27,7 @@ public class TestController {
     public String hell0(){
         ValueOperations opsForValue = redisTemplate.opsForValue();
         Object name = opsForValue.get("name");
+        System.out.println("测试redis缓存");
         return  "Hello Spring boot!"+name;
     }
 
