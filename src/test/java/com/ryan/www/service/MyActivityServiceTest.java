@@ -1,8 +1,11 @@
 package com.ryan.www.service;
 
+import com.ryan.www.aspect.SelfAdvice;
 import com.ryan.www.entity.MyActivity;
+import com.ryan.www.service.impl.MyActivityServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -34,4 +37,15 @@ public class MyActivityServiceTest  {
 //        String ryan = opsForValue.get("ryan");
 //        System.out.println(ryan);
 //    }
+
+    @Test
+    public void  testAdvice(){
+        ProxyFactory proxyFactory = new ProxyFactory();
+        proxyFactory.setTarget(new MyActivityServiceImpl() );
+        proxyFactory.addAdvice(new SelfAdvice());
+        MyActivityService service = (MyActivityService) proxyFactory.getProxy();
+        service.loadByCustomerId(3);
+    }
+
+
 }
