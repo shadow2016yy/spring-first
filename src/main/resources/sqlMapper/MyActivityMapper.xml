@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ryan.www.dao.MyActivityDao">
+    <resultMap id="BaseResultMap" type="com.ryan.www.entity.MyActivity" >
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="customerId" property="customerId" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="select_all">
+        SELECT
+        id,
+        customerId,
+        actId,
+        actName,
+        actType,
+        actUrl,
+        startTime,
+        endTime,
+        actStatus,
+        showStatus,
+        coverImg,
+        config,
+        introduction,
+        isDeleted,
+        createTime,
+        updateTime
+        FROM t_my_activity
+    </sql>
+
+    <select id="loadAllByCustomerId" parameterType="map" resultType="com.ryan.www.entity.MyActivity">
+        <include refid="select_all"></include>
+        WHERE customerId = #{customerId} and isDeleted = 0
+    </select>
+
+    <insert id="create" parameterType="MyActivity" useGeneratedKeys="true" keyProperty="id">
+        INSERT  INTO t_my_activity(
+        customerId, actId,actName, actType,actUrl, startTime, endTime,    actStatus,    showStatus,    coverImg,    config,    introduction, createTime, updateTime,    isDeleted   )
+        VALUES(
+        #{customerId},#{actId},#{actName},#{actType},#{actUrl},#{startTime},#{endTime},#{actStatus},#{showStatus},#{coverImg},#{config},#{introduction},#{createTime},#{updateTime},#{isDeleted})
+    </insert>
+
+    <select id="findById" parameterType="map" resultType="MyActivity">
+        <include refid="select_all"></include>
+        WHERE id = #{id} and isDeleted = 0
+    </select>
+
+    <delete id="delete" parameterType="map">
+        update `t_my_activity` set isDeleted = 1 WHERE id =#{id}
+    </delete>
+
+    <update id="update" parameterType="MyActivity">
+        UPDATE  t_my_activity
+        SET
+        customerId=#{customerId},actId=#{actId},actName=#{actName},actType=#{actType},actUrl=#{actUrl},
+        startTime=#{startTime},endTime=#{endTime},actStatus=#{actStatus},showStatus=#{showStatus},coverImg=#{coverImg},
+        config= #{config},introduction=#{introduction},createTime=#{createTime},updateTime=#{updateTime},isDeleted=#{isDeleted}
+        WHERE id = #{id}
+    </update>
+
+    <select id="fuzzySearch" parameterType="map" resultType="MyActivity">
+        <include refid="select_all"></include>
+        WHERE customerId = #{customerId} and isDeleted = 0
+        <if test="showStatus >=0 ">
+            AND showStatus=#{showStatus}
+        </if>
+        <if test=" actStatus >=0 ">
+            AND actStatus=#{actStatus}
+        </if>
+        <if test="actType >0 ">
+            AND actType=#{actType}
+        </if>
+        <if test="keyword!=null and keyword !='' ">
+            AND actName LIKE  concat('%',#{keyword},'%')
+        </if>
+        ORDER BY createTime DESC
+        <if test="limit != 0">
+            limit #{start},#{limit}
+        </if>
+    </select>
+
+    <select id="fuzzySearchCount" parameterType="map" resultType="java.lang.Integer">
+        SELECT
+        count(*)
+        FROM t_my_activity
+        WHERE customerId = #{customerId} and isDeleted = 0
+        <if test="showStatus >=0 ">
+            AND showStatus=#{showStatus}
+        </if>
+        <if test=" actStatus >=0 ">
+            AND actStatus=#{actStatus}
+        </if>
+        <if test="actType >0 ">
+            AND actType=#{actType}
+        </if>
+        <if test="keyword!=null and keyword !='' ">
+            AND actName LIKE  concat('%',#{keyword},'%')
+        </if>
+    </select>
+    <update id="changeStatus" parameterType="MyActivity">
+        UPDATE  t_my_activity
+        SET
+        showStatus=#{showStatus},updateTime=Now()
+        WHERE id = #{id}
+    </update>
+
+
+
+
+
+</mapper>
