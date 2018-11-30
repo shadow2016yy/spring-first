@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 /**
  * Created by Ryan on 2018/11/29.
  */
-@Log4j
 @Component
 @Aspect
 public class ControllerLog {
