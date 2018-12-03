@@ -28,6 +28,7 @@ public class TestController {
         ValueOperations opsForValue = redisTemplate.opsForValue();
         Object name = opsForValue.get("name");
         System.out.println("测试redis缓存");
+        redisTemplate.convertAndSend("chat","这个是发送的源消息");
         return  "Hello Spring boot!"+name;
     }
 
@@ -46,6 +47,18 @@ public class TestController {
     public Object loadAll(){
         List<?> objects = userService.loadAll();
         return  objects;
+    }
+
+    @RequestMapping(value = "/testBaby",method = RequestMethod.GET)
+    public String testBaby(){
+        sendMessage();
+        return"testBaby";
+    }
+    private  void sendMessage(){
+        redisTemplate.convertAndSend("chat","这个是要发送的消息"+Math.random());
+        redisTemplate.convertAndSend("wechat","这个是要发送的微信消息"+Math.random());
+
+
     }
 
 }
