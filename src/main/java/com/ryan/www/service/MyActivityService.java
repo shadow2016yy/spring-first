@@ -14,4 +14,10 @@ public interface MyActivityService {
      * @return
      */
     List<MyActivity> loadByCustomerId(int customerId);
+
+    /**
+     * 保存活动
+     * @param myActivity
+     */
+    void save(MyActivity myActivity);
 }

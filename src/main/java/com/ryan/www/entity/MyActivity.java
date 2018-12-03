@@ -14,8 +14,7 @@ import java.util.Date;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class MyActivity {
-    private int id;
+public class MyActivity extends BasicEntity {
     private int customerId;
     private int actId;
     private String actName;
@@ -28,6 +27,5 @@ public class MyActivity {
     private String coverImg;
     private String config;
     private String introduction;
-    private Date createTime;
-    private Date updateTime;
+
 }

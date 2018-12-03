@@ -4,8 +4,9 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ryan.www.message.MessageReceiver;
-import org.omg.CORBA.PUBLIC_MEMBER;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.redisson.Redisson;
+import org.redisson.api.RedissonClient;
+import org.redisson.config.Config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
@@ -89,10 +90,9 @@ public class RedisConfig extends CachingConfigurerSupport {
     }
 
     @Bean
-    RedisMessageListenerContainer container(RedisConnectionFactory connectionFactory,
-                                            MessageListenerAdapter listenerAdapter){
+    public RedisMessageListenerContainer container(MessageListenerAdapter listenerAdapter){
         RedisMessageListenerContainer container = new RedisMessageListenerContainer();
-        container.setConnectionFactory(connectionFactory);
+        container.setConnectionFactory(redisConnectFactory());
         //订阅了一个叫chat 的通道
         container.addMessageListener(listenerAdapter, new PatternTopic("chat"));
         container.addMessageListener(listenerAdapter, new PatternTopic("wechat"));
@@ -102,15 +102,28 @@ public class RedisConfig extends CachingConfigurerSupport {
     }
 
     @Bean
-    MessageListenerAdapter listenerAdapter(MessageReceiver receiver) {
+    public MessageListenerAdapter listenerAdapter(MessageReceiver receiver) {
         //这个地方 是给messageListenerAdapter 传入一个消息接受的处理器，利用反射的方法调用“receiveMessage”
         //也有好几个重载方法，这边默认调用处理器的方法 叫handleMessage 可以自己到源码里面看
         return new MessageListenerAdapter(receiver, "receiveMessage");
     }
 
     @Bean
-    MessageListenerAdapter wechatAdapter(MessageReceiver receiver) {
+    public MessageListenerAdapter wechatAdapter(MessageReceiver receiver) {
         return new MessageListenerAdapter(receiver, "receiveMessage");
     }
+
+    @Bean
+    public RedissonClient redissonClient(){
+        String format = "redis://%s:%s";
+        String redisAddress = String.format(format, host, port);
+        Config config = new Config();
+        config.useSingleServer()
+                .setAddress(redisAddress)
+                .setPassword(null);
+        return Redisson.create(config);
+    }
+    //当redisson版本较低时 会报很奇葩的错  简直了 shit
+    //org.springframework.boot.actuate.cache.CacheStatisticsProvider
 
 }

@@ -14,4 +14,6 @@ public interface MyActivityDao  {
      * @return
      */
     List<MyActivity> loadAllByCustomerId(int customerId);
+
+    void  create(MyActivity myActivity);
 }
