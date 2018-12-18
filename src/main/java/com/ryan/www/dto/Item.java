@@ -15,6 +15,8 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Item implements Serializable {
+    private int id;
+    private String name;
     private  String beginTime;
     private String endTime;
 }

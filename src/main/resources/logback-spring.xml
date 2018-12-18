@@ -9,6 +9,7 @@
 
     <!-- 开发环境 -->
     <springProfile name="dev">
+        <!--日志输出到控制台-->
         <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
             <encoder>
                 <pattern>${PATTERN}</pattern>

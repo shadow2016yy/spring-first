@@ -43,4 +43,11 @@ public class RedisTest   {
         String name = opsForValue.get("name");
         System.out.println(name);
     }
+
+    @Test
+    public void  testIncrease(){
+        ValueOperations opsForValue = redisTemplate.opsForValue();
+        Long aLong = opsForValue.increment("ryan2018", 1);
+        System.out.println("现在的值是:"+aLong);
+    }
 }
