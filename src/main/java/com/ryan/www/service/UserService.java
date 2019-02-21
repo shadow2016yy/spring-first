@@ -1,5 +1,7 @@
 package com.ryan.www.service;
 
+import com.ryan.www.dto.User;
+
 import java.util.List;
 
 /**
@@ -11,4 +13,6 @@ public interface UserService {
      * @return
      */
     List<Object> loadAll();
+
+    User  handleUeser(User user);
 }

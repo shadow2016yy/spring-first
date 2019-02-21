@@ -28,12 +28,13 @@ public class RedisTest   {
     @Test
     public void  testHash(){
         HashOperations opsForHash = hashRedisTemplate.opsForHash();
-        Object o = opsForHash.get("map", "name");
-        Map<String,String> map=new HashMap<>();
-        map.put("kobe","Laker");
-        map.put("james","Laker");
-        map.put("jordan","Bull");
-        opsForHash.putAll("nbaStar",map);
+//        Object o = opsForHash.get("map", "name");
+//        Map<String,String> map=new HashMap<>();
+//        map.put("kobe","Laker");
+//        map.put("james","Laker");
+//        map.put("jordan","Bull");
+//        opsForHash.putAll("nbaStar",map);
+        Object o = opsForHash.get("kobe", "nbaStar");
         System.out.println(o);
     }
 

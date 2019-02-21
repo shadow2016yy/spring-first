@@ -1,5 +1,6 @@
 package com.ryan.www.dto;
 
+import com.ryan.www.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,4 +17,5 @@ public class User {
     private Integer id;
     private Integer sex;
     private String name;
+    private int amout;
 }

@@ -1,0 +1,51 @@
+package rules
+
+import com.ryan.www.dto.User
+import com.ryan.www.service.impl.UserServiceImpl
+function void handleUser(User user){
+   new  UserServiceImpl().handleUeser(user);
+}
+
+rule "zero"
+    no-loop true
+    lock-on-active true
+    salience 1
+    when
+        $s : User(amout <= 100)
+    then
+        $s.setId(-1);
+        update($s);
+end
+
+rule "add100"
+    no-loop true
+    lock-on-active true
+    salience 1
+    when
+        $s : User(amout > 100 && amout <= 500)
+    then
+        $s.setId(-2);
+        update($s);
+end
+
+rule "add500"
+    no-loop true
+    lock-on-active true
+    salience 1
+    when
+        $s : User(amout > 500 && amout <= 1000)
+    then
+        //调用UserService 接口  操作User
+        handleUser($s);
+end
+
+rule "add1000"
+    no-loop true
+    lock-on-active true
+    salience 1
+    when
+        $s : User(amout > 1000)
+    then
+        $s.setId(-4);
+        update($s);
+end

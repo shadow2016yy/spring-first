@@ -1,0 +1,23 @@
+package rules
+
+import com.ryan.www.dto.Person;
+
+global java.util.List list
+
+rule "Hello World"
+    dialect "mvel"
+    when
+        m : Person( gender == 1, age : 18 )
+    then
+        System.out.println( age );
+    modify ( m ) { name = "Goodbye cruel world",
+                   age = 20 };
+end
+
+rule "Good Bye"
+    dialect "java"
+    when
+        Person( gender == 2, age : 18 )
+    then
+        System.out.println( age );
+end
