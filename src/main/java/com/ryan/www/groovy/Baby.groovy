@@ -10,4 +10,17 @@ class Baby {
     def display(){
         return name+sex
     }
+
+
+    static void main(String[] args) {
+        def baby = new Baby()
+        println(baby.metaClass)
+        println(baby.getClass())
+        baby.setAge(12)
+        baby.setName("kobe")
+        baby.setSex(2)
+
+        println(baby.display())
+
+    }
 }

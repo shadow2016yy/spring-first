@@ -33,11 +33,11 @@ import java.util.HashMap;
 @Configuration
 @EnableCaching
 public class RedisConfig extends CachingConfigurerSupport {
-    @Value("${spring.redis.host}")
+    @Value("127.0.0.1")
     private String host;
-    @Value("${spring.redis.port}")
+    @Value("6379")
     private int port;
-    @Value("${spring.redis.database}")
+    @Value("0")
     private int database;
 
 

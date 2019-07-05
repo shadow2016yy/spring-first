@@ -20,6 +20,8 @@ public class HashCodeTest {
         System.out.println(hashCode);
         int code = Objects.hashCode(item);
         System.out.println(code);
+        int value=10;
+        System.out.println(--value);
 
     }
 }
