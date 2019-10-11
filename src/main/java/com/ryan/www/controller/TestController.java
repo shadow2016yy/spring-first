@@ -1,14 +1,13 @@
 package com.ryan.www.controller;
 
+import com.ryan.www.dto.User;
 import com.ryan.www.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -53,6 +52,13 @@ public class TestController {
     public String testBaby(){
         sendMessage();
         return"testBaby";
+    }
+
+
+    @RequestMapping(value = "/save",method = RequestMethod.POST)
+    public String save(@RequestBody@Validated User user){
+        sendMessage();
+        return"save success";
     }
     private  void sendMessage(){
         redisTemplate.convertAndSend("chat","这个是要发送的消息"+Math.random());

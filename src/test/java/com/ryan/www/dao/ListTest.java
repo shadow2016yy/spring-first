@@ -3,10 +3,7 @@ package com.ryan.www.dao;
 import com.ryan.www.dto.Person;
 import org.assertj.core.util.Lists;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -25,5 +22,10 @@ public class ListTest {
         ArrayList<Person> collect = list.stream().collect(Collectors.collectingAndThen(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(Person::getName))), ArrayList::new));
 //        List<Person> collect = list.stream().distinct().collect(Collectors.toList());
         System.out.println(collect);
+        System.out.println(list.size());
+        Iterator<Person> iterator = collect.iterator();
+        while (iterator.hasNext()){
+            System.out.println(iterator.next());
+        }
     }
 }
