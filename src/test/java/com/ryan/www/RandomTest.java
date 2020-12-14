@@ -14,7 +14,9 @@ public class RandomTest {
         System.out.println("原始的随机数");
         for (int i=0;i<10;i++){
             Random random = new Random();
-            System.out.println(random.nextInt(7));
+            System.out.println("通用的"+random.nextInt(7));
+            System.out.println("随机的"+ThreadLocalRandom.current().nextInt(7));
+
         }
     }
 }

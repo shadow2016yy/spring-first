@@ -7,6 +7,8 @@ import com.ryan.www.dto.Person;
  */
 public class StringTest {
     public static void main(String[] args) {
+        int i=0;
+        i++;
         Person person=new Person();
         Class<? extends Person> personClass = person.getClass();
         //类名是包含了包的完整路径

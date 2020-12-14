@@ -18,8 +18,8 @@ import java.util.concurrent.TimeUnit;
 public class MyActivityServiceImpl implements MyActivityService {
     @Autowired
     private MyActivityDao dao;
-    @Autowired
-    private RedissonClient redissonClient;
+//    @Autowired
+//    private RedissonClient redissonClient;
 
     @Override
     public List<MyActivity> loadByCustomerId(int customerId) {
@@ -29,20 +29,20 @@ public class MyActivityServiceImpl implements MyActivityService {
 
     @Override
     public void save(MyActivity myActivity) {
-        RLock lock = redissonClient.getLock(myActivity.getActType() + "");
-        try {
-            if (lock.tryLock(0, 10, TimeUnit.SECONDS)) {
-                System.out.println("哇哇 我获取到锁了");
-                try {
-                    dao.create(myActivity);
-                } finally {
-                    //释放锁
-                    lock.unlock();
-                }
-            }
-
-        } catch (InterruptedException e) {
-            System.out.println(e.getMessage());
-        }
+//        RLock lock = redissonClient.getLock(myActivity.getActType() + "");
+//        try {
+//            if (lock.tryLock(0, 10, TimeUnit.SECONDS)) {
+//                System.out.println("哇哇 我获取到锁了");
+//                try {
+//                    dao.create(myActivity);
+//                } finally {
+//                    //释放锁
+//                    lock.unlock();
+//                }
+//            }
+//
+//        } catch (InterruptedException e) {
+//            System.out.println(e.getMessage());
+//        }
     }
 }

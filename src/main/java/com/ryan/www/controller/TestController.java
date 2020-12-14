@@ -1,5 +1,6 @@
 package com.ryan.www.controller;
 
+import com.ryan.www.annotation.WebLog;
 import com.ryan.www.dto.User;
 import com.ryan.www.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,9 +32,10 @@ public class TestController {
         return  "Hello Spring boot!"+name;
     }
 
+    @WebLog(description = "这个是一个测试类")
     @RequestMapping(value = "/test2",method = RequestMethod.GET)
-    public String hell02(){
-        return  "Hello Spring boot!呀呀呀";
+    public String hell02(@RequestParam(name = "name") String name){
+        return  "Hello Spring boot!呀呀呀"+name;
     }
 
     @RequestMapping(value = "/test3",method = RequestMethod.GET)

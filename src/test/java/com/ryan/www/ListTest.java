@@ -40,5 +40,6 @@ public class ListTest {
         List<Integer> finalList=integerList.stream().filter(c->c>0).collect(Collectors.toList());
         System.out.println(finalList);
 
+
     }
 }

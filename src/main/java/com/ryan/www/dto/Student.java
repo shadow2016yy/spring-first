@@ -14,7 +14,7 @@ import java.io.Serializable;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Student implements Serializable {
+public class Student implements Serializable,Cloneable {
     private String name;
     private String interest;
     private int age;
